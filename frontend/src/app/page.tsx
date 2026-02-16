@@ -5,11 +5,20 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const MAX_WIND = 25;
 const RATED_WIND = 13;
 const MAX_RPM = 14.9;
+const CUT_IN_WIND = 4;
+const RATED_POWER_MW = 2.0;
 
 function windToRpm(wind: number): number {
   if (wind <= 0) return 0;
   if (wind >= RATED_WIND) return MAX_RPM;
   return (wind / RATED_WIND) * MAX_RPM;
+}
+
+function windToPowerMW(wind: number): number {
+  if (wind < CUT_IN_WIND) return 0;
+  if (wind >= RATED_WIND) return RATED_POWER_MW;
+  const fraction = (wind - CUT_IN_WIND) / (RATED_WIND - CUT_IN_WIND);
+  return RATED_POWER_MW * fraction * fraction * fraction;
 }
 
 const PARTICLES = Array.from({ length: 15 }, (_, i) => ({
@@ -27,6 +36,7 @@ export default function Home() {
   const svgGroupRef = useRef<SVGGElement>(null);
 
   const rpm = windToRpm(windSpeed);
+  const powerMW = windToPowerMW(windSpeed);
 
   const animate = useCallback(
     (time: number) => {
@@ -68,6 +78,20 @@ export default function Home() {
           background: "linear-gradient(to bottom, #87CEEB 0%, #d4eef7 60%, #f0f8ff 100%)",
         }}
       />
+
+      {/* Text overlay */}
+      <div className="absolute inset-x-0 top-0 z-10 flex flex-col items-center px-6 pt-12 text-center">
+        <p className="text-lg font-light text-gray-700">Your thumb is generating</p>
+        <p className="my-2 text-6xl font-bold text-gray-900">
+          {powerMW.toFixed(2)} <span className="text-4xl font-medium">mW</span>
+        </p>
+        <p className="text-lg font-light text-gray-700">power for the Buzludzha valley</p>
+        {powerMW > 0 && (
+          <p className="mt-3 text-sm italic text-gray-500">
+            The nation of Bulgaria thanks you, comrade.
+          </p>
+        )}
+      </div>
 
       {/* Wind particles */}
       {windSpeed > 0 &&
