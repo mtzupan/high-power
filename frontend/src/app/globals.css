@@ -27,6 +27,35 @@
   animation-delay: var(--particle-delay, 0s);
 }
 
+@keyframes fly-hat {
+  0% {
+    transform: translateX(-40px) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: var(--hat-opacity, 0.8);
+  }
+  50% {
+    transform: translateX(50vw) rotate(180deg) translateY(-30px);
+  }
+  95% {
+    opacity: var(--hat-opacity, 0.8);
+  }
+  100% {
+    transform: translateX(calc(100vw + 40px)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.flying-hat {
+  position: absolute;
+  left: 0;
+  font-size: var(--hat-size, 24px);
+  animation: fly-hat var(--hat-duration, 6s) linear infinite;
+  animation-delay: var(--hat-delay, 0s);
+  pointer-events: none;
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;

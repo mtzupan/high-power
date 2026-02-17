@@ -28,6 +28,12 @@ const PARTICLES = Array.from({ length: 15 }, (_, i) => ({
   delay: Math.random() * 4,
 }));
 
+const HATS = [
+  { id: 0, top: "15%", size: 22, delay: 1.2, emoji: "\u{1F3A9}" },
+  { id: 1, top: "40%", size: 18, delay: 3.5, emoji: "\u{1F452}" },
+  { id: 2, top: "60%", size: 26, delay: 6.0, emoji: "\u{1F9E2}" },
+];
+
 export default function Home() {
   const [windSpeed, setWindSpeed] = useState(0);
   const bladeAngleRef = useRef(0);
@@ -121,6 +127,26 @@ export default function Home() {
               } as React.CSSProperties
             }
           />
+        ))}
+
+      {/* Flying hats */}
+      {windSpeed > 0 &&
+        HATS.map((h) => (
+          <div
+            key={`hat-${h.id}`}
+            className="flying-hat"
+            style={
+              {
+                top: h.top,
+                "--hat-size": `${h.size}px`,
+                "--hat-duration": `${particleDuration * 3}s`,
+                "--hat-delay": `${h.delay * (particleDuration / 4)}s`,
+                "--hat-opacity": particleOpacity + 0.3,
+              } as React.CSSProperties
+            }
+          >
+            {h.emoji}
+          </div>
         ))}
 
       {/* Turbine SVG scene */}
