@@ -9,3 +9,4 @@ class Turbine(SQLModel, table=True):
     latitude: float
     longitude: float
     capacity_mw: float
+    current_output_mw: float

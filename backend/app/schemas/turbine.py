@@ -8,6 +8,7 @@ class TurbineCreate(SQLModel):
     latitude: float
     longitude: float
     capacity_mw: float
+    current_output_mw: float = 0.0
 
 
 class TurbineUpdate(SQLModel):
@@ -15,6 +16,7 @@ class TurbineUpdate(SQLModel):
     latitude: Optional[float] = None
     longitude: Optional[float] = None
     capacity_mw: Optional[float] = None
+    current_output_mw: Optional[float] = None
 
 
 class TurbineRead(SQLModel):
@@ -23,3 +25,4 @@ class TurbineRead(SQLModel):
     latitude: float
     longitude: float
     capacity_mw: float
+    current_output_mw: float

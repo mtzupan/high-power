@@ -66,6 +66,18 @@ export default function Home() {
     };
   }, [animate]);
 
+  // Save powerMW to backend (debounced 1s)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      fetch("/api/turbines/1/output", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ current_output_mw: powerMW }),
+      }).catch(() => {});
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [powerMW]);
+
   const particleDuration = windSpeed > 0 ? Math.max(0.8, 5 - windSpeed * 0.16) : 0;
   const particleOpacity = Math.min(0.7, windSpeed * 0.04);
 

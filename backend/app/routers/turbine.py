@@ -4,6 +4,8 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session
 
 from app.database import get_session
+from pydantic import BaseModel
+
 from app.schemas.turbine import TurbineCreate, TurbineRead, TurbineUpdate
 from app.services import turbine as turbine_service
 
@@ -30,6 +32,18 @@ def update_turbine(
     turbine_id: int, data: TurbineUpdate, session: Session = Depends(get_session)
 ):
     return turbine_service.update_turbine(session, turbine_id, data)
+
+
+class OutputUpdate(BaseModel):
+    current_output_mw: float
+
+
+@router.patch("/{turbine_id}/output", response_model=TurbineRead)
+def update_turbine_output(
+    turbine_id: int, data: OutputUpdate, session: Session = Depends(get_session)
+):
+    update = TurbineUpdate(current_output_mw=data.current_output_mw)
+    return turbine_service.update_turbine(session, turbine_id, update)
 
 
 @router.delete("/{turbine_id}", status_code=204)
