@@ -176,9 +176,9 @@ export default function Home() {
 
       {/* Turbine SVG */}
       <svg
-        viewBox="0 0 1000 700"
+        viewBox="0 -300 1000 1000"
         className="absolute inset-0 h-full w-full"
-        preserveAspectRatio="xMidYMax meet"
+        preserveAspectRatio="xMidYMid meet"
       >
         {/* Mountains */}
         <polygon points="200,700 500,350 800,700" fill="#001a00" />
