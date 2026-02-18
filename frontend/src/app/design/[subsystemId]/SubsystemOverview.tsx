@@ -99,10 +99,10 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
             <div
               key={label}
               className="rounded-xl px-4 py-3 text-center"
-              style={{ background: "rgba(253,230,138,0.15)", backdropFilter: "blur(10px)" }}
+              style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(10px)" }}
             >
-              <p className="text-xs text-yellow-200/70 uppercase tracking-wide">{label}</p>
-              <p className="text-lg font-bold text-yellow-100">{value}</p>
+              <p className="text-xs text-white/60 uppercase tracking-wide">{label}</p>
+              <p className="text-lg font-bold text-white">{value}</p>
             </div>
           ))}
         </div>
