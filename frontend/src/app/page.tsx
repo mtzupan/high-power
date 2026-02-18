@@ -92,42 +92,37 @@ export default function Home() {
   return (
     <main className="relative h-dvh w-full overflow-hidden select-none" style={{ background: "#000" }}>
 
-      {/* Navigation buttons */}
-      <div className="absolute top-0 left-0 z-20 flex flex-col gap-2 p-4 pt-12">
+      {/* Left hint text */}
+      <div className="absolute left-4 z-20 flex flex-col items-start justify-center" style={{ top: "20%", transform: "translateY(-50%)" }}>
+        <p className="text-sm font-light max-w-[100px] leading-snug" style={{ color: "rgba(0,255,65,0.55)" }}>
+          Use your thumb to change the wind speed
+        </p>
+      </div>
+
+      {/* Right navigation buttons */}
+      <div className="absolute right-4 z-20 flex flex-col gap-3" style={{ top: "20%", transform: "translateY(-50%)" }}>
         <Link
           href="/design"
-          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
-          style={{ ...BUTTON, color: "#00ff41" }}
+          className="flex flex-col rounded-2xl px-5 py-3 text-left"
+          style={{ ...BUTTON, color: "#00ff41", minWidth: "160px" }}
         >
-          <span>Design</span>
-          <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
+          <div className="flex items-center justify-between">
+            <span className="text-base font-semibold">Design</span>
+            <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
+          </div>
+          <span className="text-xs font-light mt-0.5" style={{ color: "rgba(0,255,65,0.5)" }}>Design your turbine fleet</span>
         </Link>
         <Link
           href="/stories"
-          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
-          style={{ ...BUTTON, color: "#00ff41" }}
+          className="flex flex-col rounded-2xl px-5 py-3 text-left"
+          style={{ ...BUTTON, color: "#00ff41", minWidth: "160px" }}
         >
-          <span>About</span>
-          <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
+          <div className="flex items-center justify-between">
+            <span className="text-base font-semibold">About</span>
+            <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
+          </div>
+          <span className="text-xs font-light mt-0.5" style={{ color: "rgba(0,255,65,0.5)" }}>Learn this tool&apos;s purpose</span>
         </Link>
-      </div>
-
-      {/* Text overlay */}
-      <div className="absolute inset-x-0 top-0 z-10 flex flex-col items-center px-6 pt-12 text-center">
-        <p className="text-lg font-light" style={{ color: "rgba(0,255,65,0.65)" }}>
-          Your thumb is generating
-        </p>
-        <p className="my-2 text-6xl font-bold" style={{ color: "#00ff41", textShadow: "0 0 20px rgba(0,255,65,0.5)" }}>
-          {powerMW.toFixed(2)} <span className="text-4xl font-medium">mW</span>
-        </p>
-        <p className="text-lg font-light" style={{ color: "rgba(0,255,65,0.65)" }}>
-          power for the Buzludzha valley
-        </p>
-        {powerMW > 0 && (
-          <p className="mt-3 text-sm italic" style={{ color: "rgba(0,255,65,0.45)" }}>
-            The nation of Bulgaria thanks you, comrade.
-          </p>
-        )}
       </div>
 
       {/* Wind particles */}
@@ -219,6 +214,22 @@ export default function Home() {
         {/* Ground */}
         <rect x="0" y="620" width="1000" height="80" fill="#001000" />
       </svg>
+
+      {/* Power output at turbine base */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center" style={{ bottom: "160px" }}>
+        <p className="text-5xl font-bold" style={{ color: "#00ff41", textShadow: "0 0 20px rgba(0,255,65,0.5)" }}>
+          {powerMW.toFixed(2)} <span className="text-3xl font-medium">MW</span>
+        </p>
+        {powerMW > 0 ? (
+          <p className="mt-1 text-xs italic" style={{ color: "rgba(0,255,65,0.45)" }}>
+            The nation of Bulgaria thanks you, comrade.
+          </p>
+        ) : (
+          <p className="mt-1 text-xs" style={{ color: "rgba(0,255,65,0.3)" }}>
+            No power output
+          </p>
+        )}
+      </div>
 
       {/* Slider panel */}
       <div className="absolute bottom-0 left-0 right-0 p-6 pb-8">
