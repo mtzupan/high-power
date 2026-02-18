@@ -32,24 +32,47 @@ const STORIES: Record<string, Story> = {
       },
     ],
   },
-  professionals: {
-    id: "professionals",
-    title: "For Professionals",
+  parents: {
+    id: "parents",
+    title: "For Parents",
     slides: [
       {
-        topText: "Rated capacity: 2.0 MW at 13 m/s wind speed.",
-        bottomText: "Power curve follows a cubic relationship below rated wind.",
-        emoji: "📊",
+        topText: "Coming soon.",
+        bottomText: "Stories for parents are on the way.",
+        emoji: "🌱",
       },
+    ],
+  },
+  educators: {
+    id: "educators",
+    title: "For Educators",
+    slides: [
       {
-        topText: "Cut-in at 4 m/s. Cut-out at 25 m/s.",
-        bottomText: "Rotor diameter: approximately 80 m. Hub height: 80 m.",
-        emoji: "🔩",
+        topText: "Coming soon.",
+        bottomText: "Stories for educators are on the way.",
+        emoji: "📚",
       },
+    ],
+  },
+  "engineers-community": {
+    id: "engineers-community",
+    title: "Community Involvement",
+    slides: [
       {
-        topText: "Capacity factor in Buzludzha: ~35–40%.",
-        bottomText: "Annual energy production estimate: 6,000–7,000 MWh.",
-        emoji: "🗂️",
+        topText: "Coming soon.",
+        bottomText: "Community involvement stories are on the way.",
+        emoji: "🤝",
+      },
+    ],
+  },
+  "engineers-built": {
+    id: "engineers-built",
+    title: "How this was built",
+    slides: [
+      {
+        topText: "Coming soon.",
+        bottomText: "Behind-the-build stories are on the way.",
+        emoji: "🔧",
       },
     ],
   },
