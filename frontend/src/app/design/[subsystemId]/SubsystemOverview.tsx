@@ -69,12 +69,12 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
       {/* Top nav */}
       <div className="flex items-center justify-between px-4 pt-12 pb-2 shrink-0">
         <Link
-          href="/design"
+          href="/"
           className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
           style={{ ...BUTTON, color: "#00ff41" }}
         >
           <span aria-hidden="true">‹</span>
-          <span>Back to Fleet</span>
+          <span>Back</span>
         </Link>
         <Link
           href={`/design/${subsystem.id}/detail`}

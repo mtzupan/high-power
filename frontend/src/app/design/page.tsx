@@ -1,46 +1,5 @@
-import Link from "next/link";
-
-const PANEL = { background: "rgba(0,255,65,0.05)", border: "1px solid rgba(0,255,65,0.2)", backdropFilter: "blur(10px)" };
-const BUTTON = { background: "rgba(0,255,65,0.08)", border: "1px solid rgba(0,255,65,0.35)", backdropFilter: "blur(10px)" };
+import { redirect } from "next/navigation";
 
 export default function DesignPage() {
-  return (
-    <main
-      className="relative h-dvh w-full overflow-hidden flex flex-col items-center justify-center"
-      style={{ background: "#000" }}
-    >
-      <div className="absolute top-0 left-0 p-4 pt-12">
-        <Link
-          href="/"
-          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
-          style={{ ...BUTTON, color: "#00ff41" }}
-        >
-          <span aria-hidden="true">‹</span>
-          <span>Back</span>
-        </Link>
-      </div>
-
-      <div className="mx-auto max-w-md w-full rounded-2xl p-8 flex flex-col gap-4 mx-6" style={PANEL}>
-        <h1 className="text-center text-xl font-semibold mb-2" style={{ color: "#00ff41" }}>
-          Choose a subsystem
-        </h1>
-        <Link
-          href="/design/blades"
-          className="flex items-center justify-between rounded-xl px-5 py-4 text-base font-medium"
-          style={BUTTON}
-        >
-          <span style={{ color: "#00ff41" }}>Blades</span>
-          <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
-        </Link>
-        <Link
-          href="/design/drivetrain"
-          className="flex items-center justify-between rounded-xl px-5 py-4 text-base font-medium"
-          style={BUTTON}
-        >
-          <span style={{ color: "#00ff41" }}>Drivetrain</span>
-          <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
-        </Link>
-      </div>
-    </main>
-  );
+  redirect("/");
 }

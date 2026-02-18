@@ -21,12 +21,12 @@ export default async function SubsystemPage({
       >
         <div className="absolute top-0 left-0 p-4 pt-12">
           <Link
-            href="/design"
+            href="/"
             className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
             style={{ background: "rgba(0,255,65,0.08)", border: "1px solid rgba(0,255,65,0.35)", backdropFilter: "blur(10px)", color: "#00ff41" }}
           >
             <span aria-hidden="true">‹</span>
-            <span>Back to Design</span>
+            <span>Back</span>
           </Link>
         </div>
         <div

@@ -102,15 +102,26 @@ export default function Home() {
       {/* Right navigation buttons */}
       <div className="absolute right-4 z-20 flex flex-col gap-3" style={{ top: "20%", transform: "translateY(-50%)" }}>
         <Link
-          href="/design"
+          href="/design/blades"
           className="flex flex-col rounded-2xl px-5 py-3 text-left"
           style={{ ...BUTTON, color: "#00ff41", minWidth: "160px" }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-base font-semibold">Design</span>
+            <span className="text-base font-semibold">Blades</span>
             <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
           </div>
-          <span className="text-xs font-light mt-0.5" style={{ color: "rgba(0,255,65,0.5)" }}>Design your turbine fleet</span>
+          <span className="text-xs font-light mt-0.5" style={{ color: "rgba(0,255,65,0.5)" }}>number, shape</span>
+        </Link>
+        <Link
+          href="/design/drivetrain"
+          className="flex flex-col rounded-2xl px-5 py-3 text-left"
+          style={{ ...BUTTON, color: "#00ff41", minWidth: "160px" }}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-base font-semibold">Drivetrain</span>
+            <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
+          </div>
+          <span className="text-xs font-light mt-0.5" style={{ color: "rgba(0,255,65,0.5)" }}>gears, generator</span>
         </Link>
         <Link
           href="/stories"
@@ -121,7 +132,7 @@ export default function Home() {
             <span className="text-base font-semibold">About</span>
             <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
           </div>
-          <span className="text-xs font-light mt-0.5" style={{ color: "rgba(0,255,65,0.5)" }}>Learn this tool&apos;s purpose</span>
+          <span className="text-xs font-light mt-0.5" style={{ color: "rgba(0,255,65,0.5)" }}>this tool&apos;s purpose</span>
         </Link>
       </div>
 
