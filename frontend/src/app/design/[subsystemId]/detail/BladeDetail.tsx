@@ -15,6 +15,10 @@ const LOWER_OFFSETS = [42, 82, 125] as const;
 const WIND_OFFSETS = [-100, -50, 0, 50, 100] as const;
 const LIFT_XS = [355, 410, 465, 520, 575] as const;
 
+const PANEL = { background: "rgba(0,255,65,0.05)", border: "1px solid rgba(0,255,65,0.2)", backdropFilter: "blur(10px)" };
+const BUTTON = { background: "rgba(0,255,65,0.08)", border: "1px solid rgba(0,255,65,0.35)", backdropFilter: "blur(10px)" };
+const OUTPUT = { background: "rgba(0,255,65,0.1)", border: "1px solid rgba(0,255,65,0.3)" };
+
 function describeArc(
   cx: number,
   cy: number,
@@ -51,24 +55,20 @@ export default function BladeDetail() {
   const liftPx = Math.min((cl / 1.8) * 80 * Math.min(windSpeed / 10, 2), 90);
   const windArrowLen = Math.min(windSpeed * 6.5, 160);
 
-  // Chord direction endpoint (rotated by -AoA from horizontal)
   const chordEndX = 320 + 48 * Math.cos(-aoaRad);
   const chordEndY = PIVOT_Y + 48 * Math.sin(-aoaRad);
 
   return (
     <main
       className="h-dvh w-full overflow-hidden flex flex-col select-none"
-      style={{
-        background:
-          "linear-gradient(to bottom, #87CEEB 0%, #d4eef7 60%, #f0f8ff 100%)",
-      }}
+      style={{ background: "#000" }}
     >
       {/* Nav */}
       <div className="flex items-center px-4 pt-10 pb-2 shrink-0">
         <Link
           href="/design/blades"
-          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium text-white"
-          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
+          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
+          style={{ ...BUTTON, color: "#00ff41" }}
         >
           <span aria-hidden="true">‹</span>
           <span>Back to Blades</span>
@@ -92,7 +92,7 @@ export default function BladeDetail() {
               refY="3"
               orient="auto"
             >
-              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(96,165,250,0.7)" />
+              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,255,65,0.6)" />
             </marker>
             <marker
               id="blade-wind-arrow"
@@ -103,7 +103,7 @@ export default function BladeDetail() {
               refY="3"
               orient="auto"
             >
-              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(96,165,250,0.9)" />
+              <path d="M0,0 L6,3 L0,6 Z" fill="#00ff41" />
             </marker>
             <marker
               id="blade-lift-arrow"
@@ -114,7 +114,7 @@ export default function BladeDetail() {
               refY="0"
               orient="auto"
             >
-              <path d="M0,6 L3,0 L6,6 Z" fill="#4ade80" />
+              <path d="M0,6 L3,0 L6,6 Z" fill="#00ff41" />
             </marker>
           </defs>
 
@@ -124,7 +124,7 @@ export default function BladeDetail() {
               key={`u${dy}`}
               d={streamlinePath(dy, angleOfAttack, true)}
               fill="none"
-              stroke="rgba(96,165,250,0.55)"
+              stroke="rgba(0,255,65,0.45)"
               strokeWidth="1.5"
               markerEnd="url(#blade-stream-arrow)"
             />
@@ -136,7 +136,7 @@ export default function BladeDetail() {
               key={`l${dy}`}
               d={streamlinePath(dy, angleOfAttack, false)}
               fill="none"
-              stroke="rgba(96,165,250,0.4)"
+              stroke="rgba(0,255,65,0.25)"
               strokeWidth="1.2"
               markerEnd="url(#blade-stream-arrow)"
             />
@@ -151,7 +151,7 @@ export default function BladeDetail() {
                 y1={PIVOT_Y + dy}
                 x2={50 + windArrowLen}
                 y2={PIVOT_Y + dy}
-                stroke="rgba(96,165,250,0.85)"
+                stroke="rgba(0,255,65,0.7)"
                 strokeWidth="2"
                 markerEnd="url(#blade-wind-arrow)"
               />
@@ -166,7 +166,7 @@ export default function BladeDetail() {
                 y1={275}
                 x2={x}
                 y2={275 - liftPx}
-                stroke="#4ade80"
+                stroke="#00ff41"
                 strokeWidth="2.5"
                 markerEnd="url(#blade-lift-arrow)"
               />
@@ -179,20 +179,20 @@ export default function BladeDetail() {
               y1={195}
               x2={650}
               y2={195}
-              stroke="rgba(255,255,255,0.3)"
+              stroke="rgba(0,255,65,0.3)"
               strokeWidth="1"
               strokeDasharray="4 4"
             />
             <path
               d={AIRFOIL_PATH}
-              fill="rgba(180,140,220,0.72)"
-              stroke="rgba(140,90,200,0.85)"
-              strokeWidth="2"
+              fill="rgba(0,255,65,0.06)"
+              stroke="#00ff41"
+              strokeWidth="1.5"
             />
             <text
               x={510}
               y={183}
-              fill="rgba(110,65,170,0.95)"
+              fill="rgba(0,255,65,0.85)"
               fontSize="13"
               fontWeight="600"
               textAnchor="middle"
@@ -207,7 +207,7 @@ export default function BladeDetail() {
             y1={PIVOT_Y}
             x2={368}
             y2={PIVOT_Y}
-            stroke="rgba(255,255,255,0.65)"
+            stroke="rgba(0,255,65,0.5)"
             strokeWidth="1.5"
             strokeDasharray="4 3"
           />
@@ -216,77 +216,37 @@ export default function BladeDetail() {
             y1={PIVOT_Y}
             x2={chordEndX}
             y2={chordEndY}
-            stroke="#fde68a"
+            stroke="#00ff41"
             strokeWidth="2"
           />
           {angleOfAttack > 0 && (
             <path
               d={describeArc(320, PIVOT_Y, 28, -angleOfAttack, 0)}
               fill="none"
-              stroke="#fde68a"
+              stroke="#00ff41"
               strokeWidth="1.2"
-              opacity="0.85"
+              opacity="0.8"
             />
           )}
-          <text
-            x={285}
-            y={PIVOT_Y + 28}
-            fill="rgba(255,255,255,0.8)"
-            fontSize="11"
-            textAnchor="middle"
-          >
+          <text x={285} y={PIVOT_Y + 28} fill="rgba(0,255,65,0.7)" fontSize="11" textAnchor="middle">
             Angle of
           </text>
-          <text
-            x={285}
-            y={PIVOT_Y + 41}
-            fill="rgba(255,255,255,0.8)"
-            fontSize="11"
-            textAnchor="middle"
-          >
+          <text x={285} y={PIVOT_Y + 41} fill="rgba(0,255,65,0.7)" fontSize="11" textAnchor="middle">
             Attack
           </text>
 
           {/* Fixed labels */}
-          <text
-            x={65}
-            y={PIVOT_Y - 118}
-            fill="rgba(255,255,255,0.75)"
-            fontSize="13"
-            fontWeight="600"
-          >
+          <text x={65} y={PIVOT_Y - 118} fill="rgba(0,255,65,0.7)" fontSize="13" fontWeight="600">
             Wind
           </text>
-          <text
-            x={730}
-            y={100}
-            fill="rgba(220,235,255,0.85)"
-            fontSize="13"
-            fontWeight="500"
-            textAnchor="middle"
-          >
+          <text x={730} y={100} fill="rgba(0,255,65,0.75)" fontSize="13" fontWeight="500" textAnchor="middle">
             Low Pressure
           </text>
-          <text
-            x={710}
-            y={340}
-            fill="rgba(200,220,255,0.65)"
-            fontSize="13"
-            fontWeight="500"
-            textAnchor="middle"
-          >
+          <text x={710} y={340} fill="rgba(0,255,65,0.45)" fontSize="13" fontWeight="500" textAnchor="middle">
             High Pressure
           </text>
           {liftPx > 4 && (
-            <text
-              x={465}
-              y={292}
-              fill="#4ade80"
-              fontSize="12"
-              fontWeight="600"
-              textAnchor="middle"
-              opacity="0.85"
-            >
+            <text x={465} y={292} fill="#00ff41" fontSize="12" fontWeight="600" textAnchor="middle" opacity="0.85">
               Lift
             </text>
           )}
@@ -295,35 +255,26 @@ export default function BladeDetail() {
 
       {/* Bottom control panel */}
       <div className="px-4 pb-8 pt-2 shrink-0">
-        <div
-          className="mx-auto max-w-2xl rounded-2xl px-5 py-4"
-          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
-        >
+        <div className="mx-auto max-w-2xl rounded-2xl px-5 py-4" style={PANEL}>
           {/* Output boxes */}
           <div className="flex gap-3 mb-4">
-            <div
-              className="flex-1 rounded-xl px-4 py-3 text-center"
-              style={{ background: "rgba(253,230,138,0.22)" }}
-            >
-              <p className="text-xs text-yellow-100/70 uppercase tracking-wide mb-0.5">
+            <div className="flex-1 rounded-xl px-4 py-3 text-center" style={OUTPUT}>
+              <p className="text-xs uppercase tracking-wide mb-0.5" style={{ color: "rgba(0,255,65,0.55)" }}>
                 Pressure diff
               </p>
-              <p className="text-lg font-bold text-yellow-100">{pressureDiff} Pa</p>
+              <p className="text-lg font-bold" style={{ color: "#00ff41" }}>{pressureDiff} Pa</p>
             </div>
-            <div
-              className="flex-1 rounded-xl px-4 py-3 text-center"
-              style={{ background: "rgba(253,230,138,0.22)" }}
-            >
-              <p className="text-xs text-yellow-100/70 uppercase tracking-wide mb-0.5">
+            <div className="flex-1 rounded-xl px-4 py-3 text-center" style={OUTPUT}>
+              <p className="text-xs uppercase tracking-wide mb-0.5" style={{ color: "rgba(0,255,65,0.55)" }}>
                 Resultant velocity
               </p>
-              <p className="text-lg font-bold text-yellow-100">{resultantVelocity} m/s</p>
+              <p className="text-lg font-bold" style={{ color: "#00ff41" }}>{resultantVelocity} m/s</p>
             </div>
           </div>
 
-          {/* Angle of attack slider */}
+          {/* AoA slider */}
           <div className="mb-3">
-            <div className="flex justify-between text-sm text-white mb-1">
+            <div className="flex justify-between text-sm mb-1" style={{ color: "#00ff41" }}>
               <span className="font-medium">Angle of Attack</span>
               <span className="font-bold">{angleOfAttack}°</span>
             </div>
@@ -336,7 +287,7 @@ export default function BladeDetail() {
               onChange={(e) => setAngleOfAttack(parseInt(e.target.value, 10))}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-white/50 mt-0.5">
+            <div className="flex justify-between text-xs mt-0.5" style={{ color: "rgba(0,255,65,0.4)" }}>
               <span>0° (no lift)</span>
               <span>20° (near stall)</span>
             </div>
@@ -344,7 +295,7 @@ export default function BladeDetail() {
 
           {/* Wind speed slider */}
           <div>
-            <div className="flex justify-between text-sm text-white mb-1">
+            <div className="flex justify-between text-sm mb-1" style={{ color: "#00ff41" }}>
               <span className="font-medium">Wind Speed</span>
               <span className="font-bold">{windSpeed} m/s</span>
             </div>
@@ -357,7 +308,7 @@ export default function BladeDetail() {
               onChange={(e) => setWindSpeed(parseFloat(e.target.value))}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-white/50 mt-0.5">
+            <div className="flex justify-between text-xs mt-0.5" style={{ color: "rgba(0,255,65,0.4)" }}>
               <span>0 m/s</span>
               <span>25 m/s</span>
             </div>

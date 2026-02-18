@@ -20,7 +20,6 @@ export default function StoryPlayer({ story }: { story: Story }) {
     setSlideIndex((prev) => prev + 1);
   }, []);
 
-  // Auto-advance and exit logic
   useEffect(() => {
     if (slideIndex >= totalSlides) {
       router.push("/stories");
@@ -68,8 +67,7 @@ export default function StoryPlayer({ story }: { story: Story }) {
       className="relative h-dvh w-full overflow-hidden select-none flex flex-col"
       style={
         {
-          background:
-            "linear-gradient(to bottom, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+          background: "#000",
           "--story-play-state": isPaused ? "paused" : "running",
         } as React.CSSProperties
       }
@@ -83,10 +81,10 @@ export default function StoryPlayer({ story }: { story: Story }) {
           <div
             key={i}
             className="flex-1 h-0.5 rounded-full overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.3)" }}
+            style={{ background: "rgba(0,255,65,0.2)" }}
           >
             {i < slideIndex && (
-              <div className="h-full w-full bg-white rounded-full" />
+              <div className="h-full w-full rounded-full" style={{ background: "#00ff41" }} />
             )}
             {i === slideIndex && (
               <div key={slideIndex} className="story-progress-fill" />
@@ -99,7 +97,8 @@ export default function StoryPlayer({ story }: { story: Story }) {
       <div className="px-6 pt-6 overflow-hidden">
         <p
           key={`top-${slideIndex}`}
-          className="story-text-top text-sm font-light text-white/80 text-center"
+          className="story-text-top text-sm font-light text-center"
+          style={{ color: "rgba(0,255,65,0.8)" }}
         >
           {currentSlide.topText}
         </p>
@@ -121,7 +120,8 @@ export default function StoryPlayer({ story }: { story: Story }) {
       <div className="px-6 pb-16 overflow-hidden">
         <p
           key={`bottom-${slideIndex}`}
-          className="story-text-bottom text-sm font-light text-white/80 text-center"
+          className="story-text-bottom text-sm font-light text-center"
+          style={{ color: "rgba(0,255,65,0.8)" }}
         >
           {currentSlide.bottomText}
         </p>

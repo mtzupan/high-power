@@ -35,6 +35,8 @@ const HATS = [
   { id: 2, top: "60%", size: 26, delay: 6.0, emoji: "\u{1F9E2}" },
 ];
 
+const BUTTON = { background: "rgba(0,255,65,0.08)", border: "1px solid rgba(0,255,65,0.35)", backdropFilter: "blur(10px)" };
+
 export default function Home() {
   const [windSpeed, setWindSpeed] = useState(0);
   const bladeAngleRef = useRef(0);
@@ -49,7 +51,7 @@ export default function Home() {
     (time: number) => {
       if (lastTimeRef.current !== null) {
         const dt = (time - lastTimeRef.current) / 1000;
-        const degreesPerSecond = rpm * 6; // rpm * 360 / 60
+        const degreesPerSecond = rpm * 6;
         bladeAngleRef.current =
           (bladeAngleRef.current + degreesPerSecond * dt) % 360;
         if (svgGroupRef.current) {
@@ -73,7 +75,6 @@ export default function Home() {
     };
   }, [animate]);
 
-  // Save powerMW to backend (debounced 1s)
   useEffect(() => {
     const timeout = setTimeout(() => {
       fetch("/api/turbines/1/output", {
@@ -89,44 +90,41 @@ export default function Home() {
   const particleOpacity = Math.min(0.7, windSpeed * 0.04);
 
   return (
-    <main className="relative h-dvh w-full overflow-hidden select-none">
-      {/* Sky gradient */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(to bottom, #87CEEB 0%, #d4eef7 60%, #f0f8ff 100%)",
-        }}
-      />
+    <main className="relative h-dvh w-full overflow-hidden select-none" style={{ background: "#000" }}>
 
-      {/* Navigation buttons — top-left */}
+      {/* Navigation buttons */}
       <div className="absolute top-0 left-0 z-20 flex flex-col gap-2 p-4 pt-12">
         <Link
           href="/design"
-          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium text-white"
-          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
+          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
+          style={{ ...BUTTON, color: "#00ff41" }}
         >
           <span>Design</span>
-          <span className="opacity-60" aria-hidden="true">›</span>
+          <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
         </Link>
         <Link
           href="/stories"
-          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium text-white"
-          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
+          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
+          style={{ ...BUTTON, color: "#00ff41" }}
         >
           <span>About</span>
-          <span className="opacity-60" aria-hidden="true">›</span>
+          <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
         </Link>
       </div>
 
       {/* Text overlay */}
       <div className="absolute inset-x-0 top-0 z-10 flex flex-col items-center px-6 pt-12 text-center">
-        <p className="text-lg font-light text-gray-700">Your thumb is generating</p>
-        <p className="my-2 text-6xl font-bold text-gray-900">
+        <p className="text-lg font-light" style={{ color: "rgba(0,255,65,0.65)" }}>
+          Your thumb is generating
+        </p>
+        <p className="my-2 text-6xl font-bold" style={{ color: "#00ff41", textShadow: "0 0 20px rgba(0,255,65,0.5)" }}>
           {powerMW.toFixed(2)} <span className="text-4xl font-medium">mW</span>
         </p>
-        <p className="text-lg font-light text-gray-700">power for the Buzludzha valley</p>
+        <p className="text-lg font-light" style={{ color: "rgba(0,255,65,0.65)" }}>
+          power for the Buzludzha valley
+        </p>
         {powerMW > 0 && (
-          <p className="mt-3 text-sm italic text-gray-500">
+          <p className="mt-3 text-sm italic" style={{ color: "rgba(0,255,65,0.45)" }}>
             The nation of Bulgaria thanks you, comrade.
           </p>
         )}
@@ -170,101 +168,69 @@ export default function Home() {
           </div>
         ))}
 
-      {/* Turbine SVG scene */}
+      {/* Turbine SVG */}
       <svg
         viewBox="0 0 1000 700"
         className="absolute inset-0 h-full w-full"
         preserveAspectRatio="xMidYMax meet"
       >
-        {/* Mountain */}
-        <polygon
-          points="200,700 500,350 800,700"
-          fill="#4a7c59"
-        />
-        <polygon
-          points="50,700 350,420 650,700"
-          fill="#3d6b4e"
-        />
+        {/* Mountains */}
+        <polygon points="200,700 500,350 800,700" fill="#001a00" />
+        <polygon points="50,700 350,420 650,700" fill="#001000" />
 
         {/* Tower */}
         <polygon
           points="488,380 512,380 508,620 492,620"
-          fill="#b0b8c0"
+          fill="#001500"
+          stroke="rgba(0,255,65,0.4)"
+          strokeWidth="1"
         />
-        <polygon
-          points="488,380 512,380 508,620 492,620"
-          fill="url(#towerShade)"
-        />
-        <defs>
-          <linearGradient id="towerShade" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="rgba(0,0,0,0.05)" />
-            <stop offset="50%" stopColor="rgba(255,255,255,0.1)" />
-            <stop offset="100%" stopColor="rgba(0,0,0,0.1)" />
-          </linearGradient>
-        </defs>
 
-        {/* Main shaft — tower top to nacelle */}
-        <rect x="496" y="204" width="8" height="176" rx="2" fill="#7a838c" />
-        <rect x="496" y="204" width="8" height="176" rx="2" fill="url(#towerShade)" />
+        {/* Main shaft */}
+        <rect x="496" y="204" width="8" height="176" rx="2" fill="#001500" stroke="rgba(0,255,65,0.3)" strokeWidth="0.5" />
 
         {/* Nacelle */}
-        <rect
-          x="482"
-          y="188"
-          width="36"
-          height="18"
-          rx="4"
-          fill="#8a9199"
-        />
-        {/* Nacelle highlight */}
-        <rect
-          x="482"
-          y="188"
-          width="36"
-          height="9"
-          rx="4"
-          fill="rgba(255,255,255,0.08)"
-        />
+        <rect x="482" y="188" width="36" height="18" rx="4" fill="#001a00" stroke="rgba(0,255,65,0.5)" strokeWidth="1" />
 
-        {/* Drive shaft stub — nacelle to hub */}
-        <rect x="497" y="193" width="6" height="12" rx="2" fill="#6b7280" />
+        {/* Drive shaft stub */}
+        <rect x="497" y="193" width="6" height="12" rx="2" fill="#001000" />
 
         {/* Rotor hub */}
-        <circle cx="500" cy="200" r="9" fill="#6b7280" />
-        <circle cx="500" cy="200" r="6" fill="#7a838c" />
+        <circle cx="500" cy="200" r="9" fill="#001800" stroke="#00ff41" strokeWidth="1" />
+        <circle cx="500" cy="200" r="6" fill="#002500" />
 
-        {/* Blades — rotated as a group */}
+        {/* Blades */}
         <g ref={svgGroupRef}>
           {[0, 120, 240].map((angle) => (
             <g key={angle} transform={`rotate(${angle} 500 200)`}>
               <path
                 d="M500,200 L497,80 Q500,40 503,80 Z"
-                fill="#e5e7eb"
-                stroke="#d1d5db"
-                strokeWidth="0.5"
+                fill="rgba(0,255,65,0.07)"
+                stroke="#00ff41"
+                strokeWidth="1"
               />
             </g>
           ))}
         </g>
 
         {/* Hub cap */}
-        <circle cx="500" cy="200" r="5" fill="#9ca3af" />
+        <circle cx="500" cy="200" r="5" fill="#001800" stroke="rgba(0,255,65,0.6)" strokeWidth="1" />
 
-        {/* Ground line */}
-        <rect x="0" y="620" width="1000" height="80" fill="#3d6b4e" />
+        {/* Ground */}
+        <rect x="0" y="620" width="1000" height="80" fill="#001000" />
       </svg>
 
-      {/* UI overlay */}
+      {/* Slider panel */}
       <div className="absolute bottom-0 left-0 right-0 p-6 pb-8">
         <div
           className="mx-auto max-w-md rounded-2xl p-5"
-          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
+          style={{ background: "rgba(0,255,65,0.05)", border: "1px solid rgba(0,255,65,0.2)", backdropFilter: "blur(10px)" }}
         >
-          <div className="mb-3 flex items-center justify-between text-white">
-            <div className="text-sm font-medium">
+          <div className="mb-3 flex items-center justify-between">
+            <div className="text-sm font-medium" style={{ color: "#00ff41" }}>
               Wind: <span className="text-lg font-bold">{windSpeed.toFixed(1)}</span> m/s
             </div>
-            <div className="text-sm font-medium">
+            <div className="text-sm font-medium" style={{ color: "#00ff41" }}>
               Rotor: <span className="text-lg font-bold">{rpm.toFixed(1)}</span> RPM
             </div>
           </div>
@@ -277,7 +243,7 @@ export default function Home() {
             onChange={(e) => setWindSpeed(parseFloat(e.target.value))}
             className="w-full"
           />
-          <div className="mt-2 flex justify-between text-xs text-white/60">
+          <div className="mt-2 flex justify-between text-xs" style={{ color: "rgba(0,255,65,0.5)" }}>
             <span>0 m/s</span>
             <span>Calm → Gale</span>
             <span>25 m/s</span>

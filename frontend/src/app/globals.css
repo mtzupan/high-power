@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+body {
+  background: #000;
+  color: #00ff41;
+  text-shadow: 0 0 6px rgba(0, 255, 65, 0.25);
+}
+
 @keyframes wind-particle {
   0% {
     transform: translateX(-20px);
@@ -22,7 +28,7 @@
   left: 0;
   height: 2px;
   border-radius: 1px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 255, 65, 0.7);
   animation: wind-particle var(--particle-duration, 4s) linear infinite;
   animation-delay: var(--particle-delay, 0s);
 }
@@ -59,31 +65,32 @@
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  height: 8px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.3);
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(0, 255, 65, 0.2);
   outline: none;
+  border: 1px solid rgba(0, 255, 65, 0.3);
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: white;
+  background: #00ff41;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: white;
+  background: #00ff41;
   cursor: pointer;
   border: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
 }
 
 /* --- Story player animations --- */
@@ -110,8 +117,9 @@ input[type="range"]::-moz-range-thumb {
 
 .story-progress-fill {
   height: 100%;
-  background: white;
+  background: #00ff41;
   border-radius: 2px;
+  box-shadow: 0 0 6px rgba(0, 255, 65, 0.5);
   animation: story-progress 6s linear forwards;
   animation-play-state: var(--story-play-state, running);
 }

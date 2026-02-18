@@ -20,6 +20,8 @@ import {
 } from "@/data/subsystems";
 
 const FIXED_RPM = 8;
+const PANEL = { background: "rgba(0,255,65,0.05)", border: "1px solid rgba(0,255,65,0.2)", backdropFilter: "blur(10px)" };
+const BUTTON = { background: "rgba(0,255,65,0.08)", border: "1px solid rgba(0,255,65,0.35)", backdropFilter: "blur(10px)" };
 
 export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem }) {
   const [numBlades, setNumBlades] = useState(3);
@@ -62,27 +64,25 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
   return (
     <main
       className="h-dvh w-full overflow-hidden flex flex-col select-none"
-      style={{
-        background: "linear-gradient(to bottom, #87CEEB 0%, #d4eef7 60%, #f0f8ff 100%)",
-      }}
+      style={{ background: "#000" }}
     >
       {/* Top nav */}
       <div className="flex items-center justify-between px-4 pt-12 pb-2 shrink-0">
         <Link
           href="/design"
-          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium text-white"
-          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
+          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
+          style={{ ...BUTTON, color: "#00ff41" }}
         >
           <span aria-hidden="true">‹</span>
           <span>Back to Fleet</span>
         </Link>
         <Link
           href={`/design/${subsystem.id}/detail`}
-          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium text-white"
-          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
+          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium"
+          style={{ ...BUTTON, color: "#00ff41" }}
         >
           <span>Blade Design</span>
-          <span className="opacity-60" aria-hidden="true">›</span>
+          <span style={{ color: "rgba(0,255,65,0.5)" }} aria-hidden="true">›</span>
         </Link>
       </div>
 
@@ -96,13 +96,9 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
             { label: "Avg Output", value: calcAvgOutput(numBlades) },
             { label: "Efficiency", value: calcEfficiency(numBlades) },
           ].map(({ label, value }) => (
-            <div
-              key={label}
-              className="rounded-xl px-4 py-3 text-center"
-              style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(10px)" }}
-            >
-              <p className="text-xs text-white/60 uppercase tracking-wide">{label}</p>
-              <p className="text-lg font-bold text-white">{value}</p>
+            <div key={label} className="rounded-xl px-4 py-3 text-center" style={PANEL}>
+              <p className="text-xs uppercase tracking-wide mb-0.5" style={{ color: "rgba(0,255,65,0.55)" }}>{label}</p>
+              <p className="text-lg font-bold" style={{ color: "#00ff41" }}>{value}</p>
             </div>
           ))}
         </div>
@@ -114,52 +110,30 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
             className="h-full w-full"
             preserveAspectRatio="xMidYMid meet"
           >
-            {/* Mountain */}
-            <polygon points="200,700 500,350 800,700" fill="#4a7c59" />
-            <polygon points="50,700 350,420 650,700" fill="#3d6b4e" />
+            {/* Mountains */}
+            <polygon points="200,700 500,350 800,700" fill="#001a00" />
+            <polygon points="50,700 350,420 650,700" fill="#001000" />
 
             {/* Tower */}
-            <polygon points="488,380 512,380 508,620 492,620" fill="#b0b8c0" />
             <polygon
               points="488,380 512,380 508,620 492,620"
-              fill="url(#towerShadeDesign)"
+              fill="#001500"
+              stroke="rgba(0,255,65,0.4)"
+              strokeWidth="1"
             />
-            <defs>
-              <linearGradient id="towerShadeDesign" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="rgba(0,0,0,0.05)" />
-                <stop offset="50%" stopColor="rgba(255,255,255,0.1)" />
-                <stop offset="100%" stopColor="rgba(0,0,0,0.1)" />
-              </linearGradient>
-            </defs>
 
             {/* Main shaft */}
-            <rect x="496" y="204" width="8" height="176" rx="2" fill="#7a838c" />
-            <rect
-              x="496"
-              y="204"
-              width="8"
-              height="176"
-              rx="2"
-              fill="url(#towerShadeDesign)"
-            />
+            <rect x="496" y="204" width="8" height="176" rx="2" fill="#001500" stroke="rgba(0,255,65,0.3)" strokeWidth="0.5" />
 
             {/* Nacelle */}
-            <rect x="482" y="188" width="36" height="18" rx="4" fill="#8a9199" />
-            <rect
-              x="482"
-              y="188"
-              width="36"
-              height="9"
-              rx="4"
-              fill="rgba(255,255,255,0.08)"
-            />
+            <rect x="482" y="188" width="36" height="18" rx="4" fill="#001a00" stroke="rgba(0,255,65,0.5)" strokeWidth="1" />
 
             {/* Drive shaft stub */}
-            <rect x="497" y="193" width="6" height="12" rx="2" fill="#6b7280" />
+            <rect x="497" y="193" width="6" height="12" rx="2" fill="#001000" />
 
             {/* Rotor hub */}
-            <circle cx="500" cy="200" r="9" fill="#6b7280" />
-            <circle cx="500" cy="200" r="6" fill="#7a838c" />
+            <circle cx="500" cy="200" r="9" fill="#001800" stroke="#00ff41" strokeWidth="1" />
+            <circle cx="500" cy="200" r="6" fill="#002500" />
 
             {/* Variable blades */}
             <g ref={svgGroupRef}>
@@ -167,58 +141,52 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
                 <g key={angle} transform={`rotate(${angle} 500 200)`}>
                   <path
                     d="M500,200 L497,80 Q500,40 503,80 Z"
-                    fill="#e5e7eb"
-                    stroke="#d1d5db"
-                    strokeWidth="0.5"
+                    fill="rgba(0,255,65,0.07)"
+                    stroke="#00ff41"
+                    strokeWidth="1"
                   />
                 </g>
               ))}
             </g>
 
             {/* Hub cap */}
-            <circle cx="500" cy="200" r="5" fill="#9ca3af" />
+            <circle cx="500" cy="200" r="5" fill="#001800" stroke="rgba(0,255,65,0.6)" strokeWidth="1" />
 
             {/* Ground */}
-            <rect x="0" y="620" width="1000" height="80" fill="#3d6b4e" />
+            <rect x="0" y="620" width="1000" height="80" fill="#001000" />
           </svg>
         </div>
 
         {/* Right: power curve chart */}
         <div className="flex flex-col min-h-0">
-          <div
-            className="rounded-xl p-3 flex flex-col flex-1 min-h-0 min-h-48"
-            style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
-          >
-            <p className="text-xs text-white/60 text-center mb-2 shrink-0">
+          <div className="rounded-xl p-3 flex flex-col flex-1 min-h-0 min-h-48" style={PANEL}>
+            <p className="text-xs text-center mb-2 shrink-0" style={{ color: "rgba(0,255,65,0.55)" }}>
               Power Curve (MW)
             </p>
             <div className="flex-1 min-h-0">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={powerCurve} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke="rgba(255,255,255,0.1)"
-                  />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,255,65,0.12)" />
                   <XAxis
                     dataKey="wind"
                     domain={[0, 25]}
-                    tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+                    tick={{ fill: "rgba(0,255,65,0.5)", fontSize: 10 }}
                   />
                   <YAxis
                     domain={[0, 2]}
-                    tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+                    tick={{ fill: "rgba(0,255,65,0.5)", fontSize: 10 }}
                   />
                   <Line
                     type="monotone"
                     dataKey="power"
-                    stroke="#fde68a"
+                    stroke="#00ff41"
                     strokeWidth={2}
                     dot={false}
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-xs text-white/40 text-center mt-1 shrink-0">
+            <p className="text-xs text-center mt-1 shrink-0" style={{ color: "rgba(0,255,65,0.35)" }}>
               Wind speed (m/s)
             </p>
           </div>
@@ -227,15 +195,12 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
 
       {/* Bottom slider */}
       <div className="px-6 pb-8 pt-2 shrink-0">
-        <div
-          className="mx-auto max-w-md rounded-2xl p-5"
-          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
-        >
-          <div className="mb-3 flex items-center justify-between text-white">
-            <div className="text-sm font-medium">
+        <div className="mx-auto max-w-md rounded-2xl p-5" style={PANEL}>
+          <div className="mb-3 flex items-center justify-between">
+            <div className="text-sm font-medium" style={{ color: "#00ff41" }}>
               Blades: <span className="text-lg font-bold">{numBlades}</span>
             </div>
-            <div className="text-sm font-medium text-white/60">
+            <div className="text-sm font-medium" style={{ color: "rgba(0,255,65,0.55)" }}>
               {numBlades === 3 ? "Optimal aerodynamic balance" : numBlades < 3 ? "Higher RPM, lower torque" : "More torque, more drag"}
             </div>
           </div>
@@ -248,7 +213,7 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
             onChange={(e) => setNumBlades(parseInt(e.target.value, 10))}
             className="w-full"
           />
-          <div className="mt-2 flex justify-between text-xs text-white/60">
+          <div className="mt-2 flex justify-between text-xs" style={{ color: "rgba(0,255,65,0.4)" }}>
             <span>1 blade</span>
             <span>3 = optimal</span>
             <span>6 blades</span>
