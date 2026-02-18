@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { useWindSpeed } from "@/context/WindSpeedContext";
 
 const MAX_WIND = 25;
 const RATED_WIND = 13;
@@ -96,7 +97,7 @@ function TurbineCard({ index, powerMW }: { index: number; powerMW: number }) {
 }
 
 export default function Home() {
-  const [windSpeed, setWindSpeed] = useState(0);
+  const { windSpeed, setWindSpeed } = useWindSpeed();
   const bladeAnglesRef = useRef([0, 24, 48, 72, 96]);
   const bladeGroupRefs = useRef<Array<SVGGElement | null>>(Array(5).fill(null));
   const lastTimeRef = useRef<number | null>(null);

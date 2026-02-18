@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useWindSpeed } from "@/context/WindSpeedContext";
 
 const PIVOT_X = 440;
 const PIVOT_Y = 195;
@@ -46,7 +47,7 @@ function streamlinePath(yOffset: number, aoa: number, upper: boolean): string {
 
 export default function BladeDetail() {
   const [angleOfAttack, setAngleOfAttack] = useState(8);
-  const [windSpeed, setWindSpeed] = useState(10);
+  const { windSpeed, setWindSpeed } = useWindSpeed();
 
   const aoaRad = (angleOfAttack * Math.PI) / 180;
   const cl = Math.max(0, Math.min(2 * Math.PI * aoaRad, 1.8));
