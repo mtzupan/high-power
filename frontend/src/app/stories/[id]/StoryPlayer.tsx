@@ -117,7 +117,7 @@ export default function StoryPlayer({ story }: { story: Story }) {
       </div>
 
       {/* Bottom scrolling text */}
-      <div className="px-6 pb-16 overflow-hidden">
+      <div className="px-6 pb-4 overflow-hidden">
         <p
           key={`bottom-${slideIndex}`}
           className="story-text-bottom text-sm font-light text-center"
@@ -125,6 +125,22 @@ export default function StoryPlayer({ story }: { story: Story }) {
         >
           {currentSlide.bottomText}
         </p>
+      </div>
+
+      {/* Citation */}
+      <div className="px-6 pb-12 flex justify-center" style={{ minHeight: "2rem" }}>
+        {currentSlide.citation && (
+          <a
+            href={currentSlide.citation.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="text-xs underline text-center"
+            style={{ color: "rgba(0,255,65,0.35)" }}
+          >
+            {currentSlide.citation.label}
+          </a>
+        )}
       </div>
     </main>
   );

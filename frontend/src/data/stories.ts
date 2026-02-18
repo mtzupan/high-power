@@ -2,6 +2,7 @@ export interface Slide {
   topText: string;
   bottomText: string;
   emoji: string;
+  citation?: { label: string; url: string };
 }
 
 export interface Story {
@@ -16,19 +17,38 @@ const STORIES: Record<string, Story> = {
     title: "For Students",
     slides: [
       {
-        topText: "Wind is invisible — but its power is not.",
-        bottomText: "A single turbine blade is longer than a Boeing 737 wing.",
+        topText: "A hands-on curriculum in team-based engineering.",
+        bottomText: "Real collaborative experience, before you need it.",
+        emoji: "⚡",
+      },
+      {
+        topText: "STEM education trains you to work alone.",
+        bottomText: "Nearly half of engineering work is collaborative.",
+        emoji: "🔗",
+        citation: {
+          label: "Gensler Workplace Survey 2024",
+          url: "https://www.gensler.com/gri/global-workplace-survey-2024",
+        },
+      },
+      {
+        topText: "Day 1: you simulate the full turbine.",
+        bottomText: "See how each component affects the whole.",
+        emoji: "💻",
+      },
+      {
+        topText: "Days 2 and 3: your team builds.",
+        bottomText: "Hands-on design, assembly, and real documentation.",
+        emoji: "🔧",
+      },
+      {
+        topText: "Day 4: all four teams come together.",
+        bottomText: "One turbine. Every design decision defended.",
         emoji: "🌬️",
       },
       {
-        topText: "The Buzludzha valley channels wind like a natural funnel.",
-        bottomText: "Average wind speeds here exceed 7 m/s — ideal for generation.",
-        emoji: "🏔️",
-      },
-      {
-        topText: "Your thumb just moved electrons.",
-        bottomText: "That's physics. That's power. That's you.",
-        emoji: "⚡",
+        topText: "High Power is what real engineering looks like.",
+        bottomText: "Collaborative, hands-on, built around real stakes.",
+        emoji: "🏆",
       },
     ],
   },
