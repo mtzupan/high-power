@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getSubsystem } from "@/data/subsystems";
+import BladeDetail from "./BladeDetail";
 
 export default async function DetailPage({
   params,
@@ -6,6 +9,12 @@ export default async function DetailPage({
   params: Promise<{ subsystemId: string }>;
 }) {
   const { subsystemId } = await params;
+
+  if (!getSubsystem(subsystemId)) notFound();
+
+  if (subsystemId === "blades") {
+    return <BladeDetail />;
+  }
 
   return (
     <main
@@ -24,7 +33,6 @@ export default async function DetailPage({
           <span>Back</span>
         </Link>
       </div>
-
       <div
         className="mx-auto max-w-md w-full rounded-2xl p-8 text-center mx-6"
         style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
