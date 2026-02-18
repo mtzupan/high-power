@@ -21,12 +21,28 @@ export default function DesignPage() {
       </div>
 
       <div
-        className="mx-auto max-w-md w-full rounded-2xl p-8 text-center mx-6"
+        className="mx-auto max-w-md w-full rounded-2xl p-8 flex flex-col gap-4 mx-6"
         style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
       >
-        <p className="text-4xl mb-4" aria-hidden="true">🏗️</p>
-        <h1 className="text-xl font-semibold text-white mb-2">Design</h1>
-        <p className="text-sm text-white/70">Coming soon.</p>
+        <h1 className="text-center text-xl font-semibold text-white mb-2">
+          Choose a subsystem
+        </h1>
+        <Link
+          href="/design/blades"
+          className="flex items-center justify-between rounded-xl px-5 py-4 text-base font-medium text-white"
+          style={{ background: "rgba(255,255,255,0.15)" }}
+        >
+          <span>Blades</span>
+          <span className="opacity-60" aria-hidden="true">›</span>
+        </Link>
+        <Link
+          href="/design/drivetrain"
+          className="flex items-center justify-between rounded-xl px-5 py-4 text-base font-medium text-white"
+          style={{ background: "rgba(255,255,255,0.15)" }}
+        >
+          <span>Drivetrain</span>
+          <span className="opacity-60" aria-hidden="true">›</span>
+        </Link>
       </div>
     </main>
   );
