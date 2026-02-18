@@ -184,7 +184,7 @@ export default function Home() {
       {/* Header: hint text left, nav buttons right */}
       <div className="relative z-20 flex items-start justify-between px-4 pt-10 pb-1 shrink-0">
         <p className="text-xs font-light max-w-[88px] leading-snug mt-1" style={{ color: "rgba(0,255,65,0.5)" }}>
-          Use your thumb to change the wind speed
+          Use slider to change wind speed
         </p>
         <div className="flex flex-col gap-2">
           <Link
@@ -328,7 +328,7 @@ export default function Home() {
         </p>
         {fleetPowerMW > 0 ? (
           <p className="text-xs italic" style={{ color: "rgba(0,255,65,0.45)" }}>
-            The nation of Bulgaria thanks you, comrade.
+            Nice work.
           </p>
         ) : (
           <p className="text-xs" style={{ color: "rgba(0,255,65,0.3)" }}>No power output</p>
