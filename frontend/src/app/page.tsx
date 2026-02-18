@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const MAX_WIND = 25;
@@ -96,6 +97,26 @@ export default function Home() {
           background: "linear-gradient(to bottom, #87CEEB 0%, #d4eef7 60%, #f0f8ff 100%)",
         }}
       />
+
+      {/* Navigation buttons — top-left */}
+      <div className="absolute top-0 left-0 z-20 flex flex-col gap-2 p-4 pt-12">
+        <Link
+          href="/design"
+          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium text-white"
+          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
+        >
+          <span>Design</span>
+          <span className="opacity-60" aria-hidden="true">›</span>
+        </Link>
+        <Link
+          href="/stories"
+          className="flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-medium text-white"
+          style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(10px)" }}
+        >
+          <span>About</span>
+          <span className="opacity-60" aria-hidden="true">›</span>
+        </Link>
+      </div>
 
       {/* Text overlay */}
       <div className="absolute inset-x-0 top-0 z-10 flex flex-col items-center px-6 pt-12 text-center">

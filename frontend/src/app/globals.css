@@ -85,3 +85,48 @@ input[type="range"]::-moz-range-thumb {
   border: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+
+/* --- Story player animations --- */
+
+@keyframes story-progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+@keyframes story-text-top {
+  from { transform: translateX(30px); opacity: 0.7; }
+  to   { transform: translateX(-30px); opacity: 1; }
+}
+
+@keyframes story-text-bottom {
+  from { transform: translateX(-30px); opacity: 0.7; }
+  to   { transform: translateX(30px); opacity: 1; }
+}
+
+@keyframes story-emoji-zoom {
+  from { transform: scale(0.85); }
+  to   { transform: scale(1.1); }
+}
+
+.story-progress-fill {
+  height: 100%;
+  background: white;
+  border-radius: 2px;
+  animation: story-progress 6s linear forwards;
+  animation-play-state: var(--story-play-state, running);
+}
+
+.story-text-top {
+  animation: story-text-top 6s ease-in-out forwards;
+  animation-play-state: var(--story-play-state, running);
+}
+
+.story-text-bottom {
+  animation: story-text-bottom 6s ease-in-out forwards;
+  animation-play-state: var(--story-play-state, running);
+}
+
+.story-emoji {
+  animation: story-emoji-zoom 6s ease-in-out forwards;
+  animation-play-state: var(--story-play-state, running);
+}
