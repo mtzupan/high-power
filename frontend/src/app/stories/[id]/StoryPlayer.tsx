@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Story } from "@/data/stories";
+import STORY_SVGS from "@/data/story-svgs";
 
 export default function StoryPlayer({ story }: { story: Story }) {
   const router = useRouter();
@@ -104,16 +105,25 @@ export default function StoryPlayer({ story }: { story: Story }) {
         </p>
       </div>
 
-      {/* Center emoji */}
+      {/* Center illustration */}
       <div className="flex-1 flex items-center justify-center">
-        <span
-          key={`emoji-${slideIndex}`}
-          className="story-emoji"
-          style={{ fontSize: "96px", lineHeight: 1 }}
-          aria-hidden="true"
-        >
-          {currentSlide.emoji}
-        </span>
+        {currentSlide.svgKey && STORY_SVGS[currentSlide.svgKey] ? (
+          <div
+            key={`svg-${slideIndex}`}
+            className="story-emoji"
+            style={{ width: 200, height: 200 }}
+            dangerouslySetInnerHTML={{ __html: STORY_SVGS[currentSlide.svgKey] }}
+          />
+        ) : (
+          <span
+            key={`emoji-${slideIndex}`}
+            className="story-emoji"
+            style={{ fontSize: "96px", lineHeight: 1 }}
+            aria-hidden="true"
+          >
+            {currentSlide.emoji}
+          </span>
+        )}
       </div>
 
       {/* Bottom scrolling text */}
