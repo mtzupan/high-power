@@ -137,6 +137,9 @@ def _seed(engine):
     from app.models.yaw_system import YawSystem
     from app.models.tower import Tower
     from app.models.wake_model import WakeModel
+    from app.models.gearbox import Gearbox
+    from app.models.generator import Generator
+    from app.models.blade import Blade
 
     with Session(engine) as session:
         # Seed turbines if table is empty
@@ -172,6 +175,26 @@ def _seed(engine):
         if not session.exec(select(WakeModel)).first():
             for t in session.exec(select(Turbine)).all():
                 session.add(WakeModel(turbine_id=t.id))
+            session.commit()
+
+        # Gearbox must be seeded before Generator (Generator FK references gearbox.id)
+        if not session.exec(select(Gearbox)).first():
+            for t in session.exec(select(Turbine)).all():
+                session.add(Gearbox(turbine_id=t.id))
+            session.commit()
+
+        if not session.exec(select(Generator)).first():
+            turbines = session.exec(select(Turbine)).all()
+            gearboxes = session.exec(select(Gearbox)).all()
+            gb_by_turbine = {gb.turbine_id: gb for gb in gearboxes}
+            for t in turbines:
+                gb = gb_by_turbine.get(t.id)
+                session.add(Generator(turbine_id=t.id, gearbox_id=gb.id if gb else None))
+            session.commit()
+
+        if not session.exec(select(Blade)).first():
+            for t in session.exec(select(Turbine)).all():
+                session.add(Blade(turbine_id=t.id))
             session.commit()
 
 
