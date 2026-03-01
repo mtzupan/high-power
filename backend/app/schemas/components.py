@@ -1,4 +1,50 @@
+from typing import Optional
+
 from sqlmodel import SQLModel
+
+
+class GearboxRead(SQLModel):
+    id: int
+    turbine_id: int
+    gear_ratio: float
+    num_stages: int
+    stage_configuration: str
+    efficiency: float
+    lubrication_type: str
+    input_speed_rpm: float
+    output_speed_rpm: float
+    mass_tonnes: float
+
+
+class GeneratorRead(SQLModel):
+    id: int
+    turbine_id: int
+    gearbox_id: Optional[int]
+    generator_type: str
+    rated_power_kw: float
+    rated_voltage_v: float
+    rated_speed_rpm: float
+    pole_pairs: int
+    efficiency: float
+    power_factor: float
+    cooling_type: str
+    mass_tonnes: float
+
+
+class BladeRead(SQLModel):
+    id: int
+    turbine_id: int
+    blade_length_m: float
+    material: str
+    manufacturing_method: str
+    mass_kg: float
+    max_chord_m: float
+    root_chord_m: float
+    total_twist_deg: float
+    airfoil_family: str
+    design_tip_speed_ratio: float
+    pre_bend_m: float
+    num_blades: int
 
 
 class PitchSystemRead(SQLModel):

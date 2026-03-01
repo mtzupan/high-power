@@ -6,7 +6,7 @@ export interface Subsystem {
 
 const SUBSYSTEMS: Record<string, Subsystem> = {
   blades: { id: "blades", label: "Blades", interactive: true },
-  drivetrain: { id: "drivetrain", label: "Drivetrain", interactive: false },
+  drivetrain: { id: "drivetrain", label: "Drivetrain", interactive: true },
 };
 
 export function getSubsystem(id: string): Subsystem | undefined {

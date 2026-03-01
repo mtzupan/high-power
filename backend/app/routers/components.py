@@ -3,6 +3,9 @@ from sqlmodel import Session
 
 from app.database import get_session
 from app.schemas.components import (
+    GearboxRead,
+    GeneratorRead,
+    BladeRead,
     PitchSystemRead,
     YawSystemRead,
     TowerRead,
@@ -15,6 +18,24 @@ from app.services import turbine as turbine_service
 from app.services import components as component_service
 
 router = APIRouter(prefix="/api/turbines", tags=["components"])
+
+
+@router.get("/{turbine_id}/gearbox", response_model=GearboxRead)
+def get_gearbox(turbine_id: int, session: Session = Depends(get_session)):
+    turbine_service.get_turbine(session, turbine_id)
+    return component_service.get_gearbox(session, turbine_id)
+
+
+@router.get("/{turbine_id}/generator", response_model=GeneratorRead)
+def get_generator(turbine_id: int, session: Session = Depends(get_session)):
+    turbine_service.get_turbine(session, turbine_id)
+    return component_service.get_generator(session, turbine_id)
+
+
+@router.get("/{turbine_id}/blade", response_model=BladeRead)
+def get_blade(turbine_id: int, session: Session = Depends(get_session)):
+    turbine_service.get_turbine(session, turbine_id)
+    return component_service.get_blade(session, turbine_id)
 
 
 @router.get("/{turbine_id}/pitch-system", response_model=PitchSystemRead)

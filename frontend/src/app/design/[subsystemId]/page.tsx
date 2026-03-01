@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSubsystem } from "@/data/subsystems";
 import SubsystemOverview from "./SubsystemOverview";
+import DrivetrainOverview from "./DrivetrainOverview";
+import { fetchGearbox, fetchGenerator } from "@/lib/api";
 
 export default async function SubsystemPage({
   params,
@@ -39,6 +41,14 @@ export default async function SubsystemPage({
         </div>
       </main>
     );
+  }
+
+  if (subsystemId === "drivetrain") {
+    const [gearbox, generator] = await Promise.all([
+      fetchGearbox(1),
+      fetchGenerator(1),
+    ]);
+    return <DrivetrainOverview gearbox={gearbox} generator={generator} />;
   }
 
   return <SubsystemOverview subsystem={subsystem} />;

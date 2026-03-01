@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useWindSpeed } from "@/context/WindSpeedContext";
+import type { BladeData } from "@/lib/api";
 
 const PIVOT_X = 440;
 const PIVOT_Y = 195;
@@ -52,12 +53,12 @@ function streamlinePath(yOffset: number, aoa: number, upper: boolean): string {
 const HUB_X = 150;
 const HUB_Y = 117;
 
-export default function BladeDetail() {
+export default function BladeDetail({ blade }: { blade: BladeData }) {
   const [angleOfAttack, setAngleOfAttack] = useState(8);
   const { windSpeed, setWindSpeed } = useWindSpeed();
   const [radialSection, setRadialSection] = useState(5);
-  const [bladeLength, setBladeLength] = useState(56);
-  const [bladeWidth, setBladeWidth] = useState(3);
+  const [bladeLength, setBladeLength] = useState(blade.blade_length_m);
+  const [bladeWidth, setBladeWidth] = useState(blade.max_chord_m);
 
   // ── Turbine animation refs ──
   const bladeAngleRef = useRef(0);

@@ -3,6 +3,9 @@ import math
 from fastapi import HTTPException
 from sqlmodel import Session, select
 
+from app.models.blade import Blade
+from app.models.gearbox import Gearbox
+from app.models.generator import Generator
 from app.models.pitch_system import PitchSystem
 from app.models.yaw_system import YawSystem
 from app.models.tower import Tower
@@ -10,6 +13,27 @@ from app.models.wake_model import WakeModel
 
 
 # --- CRUD ---
+
+def get_gearbox(session: Session, turbine_id: int) -> Gearbox:
+    result = session.exec(select(Gearbox).where(Gearbox.turbine_id == turbine_id)).first()
+    if not result:
+        raise HTTPException(status_code=404, detail="Gearbox not found for this turbine")
+    return result
+
+
+def get_generator(session: Session, turbine_id: int) -> Generator:
+    result = session.exec(select(Generator).where(Generator.turbine_id == turbine_id)).first()
+    if not result:
+        raise HTTPException(status_code=404, detail="Generator not found for this turbine")
+    return result
+
+
+def get_blade(session: Session, turbine_id: int) -> Blade:
+    result = session.exec(select(Blade).where(Blade.turbine_id == turbine_id)).first()
+    if not result:
+        raise HTTPException(status_code=404, detail="Blade not found for this turbine")
+    return result
+
 
 def get_pitch_system(session: Session, turbine_id: int) -> PitchSystem:
     result = session.exec(select(PitchSystem).where(PitchSystem.turbine_id == turbine_id)).first()

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSubsystem } from "@/data/subsystems";
 import BladeDetail from "./BladeDetail";
+import { fetchBlade } from "@/lib/api";
 
 export default async function DetailPage({
   params,
@@ -13,7 +14,8 @@ export default async function DetailPage({
   if (!getSubsystem(subsystemId)) notFound();
 
   if (subsystemId === "blades") {
-    return <BladeDetail />;
+    const blade = await fetchBlade(1);
+    return <BladeDetail blade={blade} />;
   }
 
   return (
