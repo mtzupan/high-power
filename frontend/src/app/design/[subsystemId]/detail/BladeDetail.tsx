@@ -122,31 +122,32 @@ export default function BladeDetail({ blade }: { blade: BladeData }) {
   const weight = Math.round(8 * bladeLength * bladeWidth);
   const cost = Math.round(weight * 200);
 
-  // ── Blade profile SVG helpers ──
+  // ── Wireframe blade geometry ──
   const maxChordPx = Math.min(bladeWidth * 12, 54);
   const bladeTopY = 20;
   const bladeRootY = 290;
   const bladeSpanPx = bladeRootY - bladeTopY;
-  const profilePts = Array.from({ length: 11 }, (_, i) => {
-    const t = i / 10; // 0 = root (bottom), 1 = tip (top)
-    const y = bladeRootY - t * bladeSpanPx;
-    const half = (maxChordPx * (1 - t * t)) / 2;
-    return { y, left: 60 - half, right: 60 + half };
-  });
-  const leftEdge = profilePts.map((p, i) => `${i === 0 ? "M" : "L"}${p.left},${p.y}`).join(" ");
-  const rightEdge = [...profilePts].reverse().map((p) => `L${p.right},${p.y}`).join(" ");
-  const bladePath = `${leftEdge}${rightEdge} Z`;
 
-  const sectionBands = Array.from({ length: 10 }, (_, i) => {
-    const t0 = i / 10;
-    const t1 = (i + 1) / 10;
-    const y0 = bladeRootY - t0 * bladeSpanPx;
-    const y1 = bladeRootY - t1 * bladeSpanPx;
-    const half0 = (maxChordPx * (1 - t0 * t0)) / 2;
-    const half1 = (maxChordPx * (1 - t1 * t1)) / 2;
-    const d = `M${60 - half0},${y0} L${60 + half0},${y0} L${60 + half1},${y1} L${60 - half1},${y1} Z`;
-    return { i, d };
+  const N_WF = 14;
+  const wfSections = Array.from({ length: N_WF }, (_, i) => {
+    const t = i / (N_WF - 1); // 0 = root (bottom), 1 = tip (top)
+    const y = bladeRootY - t * bladeSpanPx;
+    const halfChord = Math.max(1.5, (maxChordPx * (1 - t * t)) / 2);
+    // ry: root is nearly circular (0.7), tip is paper-thin (0.05)
+    const ry = Math.max(1.8, halfChord * (0.7 - t * 0.65));
+    const isHighlighted = Math.round(t * 9) === radialSection;
+    return { y, halfChord, ry, isHighlighted };
   });
+
+  const lePathD = wfSections.map((s, i) => `${i === 0 ? "M" : "L"}${(60 - s.halfChord).toFixed(1)},${s.y.toFixed(1)}`).join(" ");
+  const tePathD = wfSections.map((s, i) => `${i === 0 ? "M" : "L"}${(60 + s.halfChord).toFixed(1)},${s.y.toFixed(1)}`).join(" ");
+  const qcPathD = wfSections.map((s, i) => `${i === 0 ? "M" : "L"}${(60 - s.halfChord * 0.5).toFixed(1)},${s.y.toFixed(1)}`).join(" ");
+  const tqPathD = wfSections.map((s, i) => `${i === 0 ? "M" : "L"}${(60 + s.halfChord * 0.5).toFixed(1)},${s.y.toFixed(1)}`).join(" ");
+  const bladeFillD = [
+    ...wfSections.map((s, i) => `${i === 0 ? "M" : "L"}${(60 - s.halfChord).toFixed(1)},${s.y.toFixed(1)}`),
+    ...[...wfSections].reverse().map(s => `L${(60 + s.halfChord).toFixed(1)},${s.y.toFixed(1)}`),
+    "Z",
+  ].join(" ");
 
   return (
     <main
@@ -497,31 +498,37 @@ export default function BladeDetail({ blade }: { blade: BladeData }) {
                 className="h-full w-full"
                 preserveAspectRatio="xMidYMid meet"
               >
-                {/* Blade fill */}
-                <path d={bladePath} fill="rgba(0,255,65,0.06)" />
+                {/* Blade planform fill */}
+                <path d={bladeFillD} fill="rgba(0,255,65,0.03)" />
 
-                {/* Section highlight bands */}
-                {sectionBands.map(({ i, d }) => (
-                  <path
+                {/* Spanwise stringers: leading edge, trailing edge */}
+                <path d={lePathD} fill="none" stroke="rgba(0,255,65,0.65)" strokeWidth="1.2" />
+                <path d={tePathD} fill="none" stroke="rgba(0,255,65,0.65)" strokeWidth="1.2" />
+
+                {/* Internal stringers at 25% and 75% chord */}
+                <path d={qcPathD} fill="none" stroke="rgba(0,255,65,0.22)" strokeWidth="0.7" strokeDasharray="3 3" />
+                <path d={tqPathD} fill="none" stroke="rgba(0,255,65,0.22)" strokeWidth="0.7" strokeDasharray="3 3" />
+
+                {/* Cross-section ribs (ellipses) at each station */}
+                {wfSections.map((s, i) => (
+                  <ellipse
                     key={i}
-                    d={d}
-                    fill={i === radialSection ? "rgba(0,255,65,0.25)" : "transparent"}
-                    stroke={i === radialSection ? "#00ff41" : "none"}
-                    strokeWidth="1"
+                    cx={60}
+                    cy={s.y}
+                    rx={s.halfChord}
+                    ry={s.ry}
+                    fill={s.isHighlighted ? "rgba(0,255,65,0.12)" : "none"}
+                    stroke={s.isHighlighted ? "#00ff41" : "rgba(0,255,65,0.38)"}
+                    strokeWidth={s.isHighlighted ? 1.5 : 0.8}
                   />
                 ))}
 
-                {/* Blade outline */}
-                <path d={bladePath} fill="none" stroke="#00ff41" strokeWidth="1.5" />
+                {/* Tip point */}
+                <circle cx={60} cy={bladeTopY} r={2} fill="#00ff41" opacity={0.7} />
 
-                {/* Root label */}
-                <text x="60" y="307" fill="rgba(0,255,65,0.5)" fontSize="9" textAnchor="middle">
-                  root
-                </text>
-                {/* Tip label */}
-                <text x="60" y="16" fill="rgba(0,255,65,0.5)" fontSize="9" textAnchor="middle">
-                  tip
-                </text>
+                {/* Labels */}
+                <text x="60" y="307" fill="rgba(0,255,65,0.5)" fontSize="9" textAnchor="middle">root</text>
+                <text x="60" y="15" fill="rgba(0,255,65,0.5)" fontSize="9" textAnchor="middle">tip</text>
               </svg>
             </div>
 
