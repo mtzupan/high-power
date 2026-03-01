@@ -218,7 +218,7 @@ export default function BladeDetail({ blade }: { blade: BladeData }) {
                 {[0, 120, 240].map((angle) => (
                   <g key={angle} transform={`rotate(${angle} ${HUB_X} ${HUB_Y})`}>
                     <path
-                      d={`M${HUB_X},${HUB_Y} L${HUB_X - 3},40 Q${HUB_X},22 ${HUB_X + 3},40 Z`}
+                      d={`M${HUB_X - 4},${HUB_Y} Q${HUB_X - 7},70 ${HUB_X},22 Q${HUB_X + 7},70 ${HUB_X + 4},${HUB_Y} Z`}
                       fill="rgba(0,255,65,0.07)"
                       stroke="#00ff41"
                       strokeWidth="1"

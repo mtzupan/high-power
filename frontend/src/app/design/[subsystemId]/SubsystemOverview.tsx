@@ -140,7 +140,7 @@ export default function SubsystemOverview({ subsystem }: { subsystem: Subsystem 
               {bladeAngles.map((angle) => (
                 <g key={angle} transform={`rotate(${angle} 500 200)`}>
                   <path
-                    d="M500,200 L497,80 Q500,40 503,80 Z"
+                    d="M496,200 Q493,110 500,40 Q507,110 504,200 Z"
                     fill="rgba(0,255,65,0.07)"
                     stroke="#00ff41"
                     strokeWidth="1"
