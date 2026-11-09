@@ -5,7 +5,7 @@ written out as plain JavaScript list literals instead.
 
 Usage (from the repo root):
     python3 weblab/csv_to_datajs.py notebooks/datasets/IMG_8355_readings.csv
-    python3 weblab/csv_to_datajs.py run_a.csv run_b.csv -o weblab/project/data.js
+    python3 weblab/csv_to_datajs.py run_a.csv run_b.csv -o weblab/blade/data.js
 
 The first CSV becomes `readings`; every CSV is also available in `datasets`
 under its file name (without .csv).
@@ -17,7 +17,7 @@ import json
 from pathlib import Path
 
 NUMBER_COLUMNS = ["time_s", "current_mA", "voltage_V", "Hz"]
-DEFAULT_OUT = Path(__file__).parent / "project" / "data.js"
+DEFAULT_OUT = Path(__file__).parent / "day1-class" / "data.js"
 
 
 def js_number(text):

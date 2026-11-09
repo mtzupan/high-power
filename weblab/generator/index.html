@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turbine Data Lab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Turbine Data Lab</h1>
+    <p>Edit <code>script.js</code> one step at a time. This page updates each time you run the project.</p>
+  </header>
+
+  <main>
+    <div id="error" class="error" hidden>
+      <strong>script.js has an error.</strong>
+      Check that you uncommented whole lines and didn't delete any brackets <code>{ }</code>.
+    </div>
+
+    <section class="steps">
+      <div class="step" id="step-1">
+        <h2>Step 1 &middot; Build lists <span class="status">Not yet</span></h2>
+        <p class="result"></p>
+      </div>
+      <div class="step" id="step-2">
+        <h2>Step 2 &middot; Calculate power <span class="status">Not yet</span></h2>
+        <p class="result"></p>
+      </div>
+      <div class="step" id="step-3">
+        <h2>Step 3 &middot; Find spin-up <span class="status">Not yet</span></h2>
+        <p class="result"></p>
+      </div>
+      <div class="step" id="step-4">
+        <h2>Step 4 &middot; Steady-state average <span class="status">Not yet</span></h2>
+        <p class="result"></p>
+      </div>
+    </section>
+
+    <section class="charts">
+      <figure>
+        <figcaption>Current (mA) &mdash; dashed line marks <code>steadyStartTime</code></figcaption>
+        <canvas id="chart-current"></canvas>
+      </figure>
+      <figure>
+        <figcaption>Rotation speed (Hz)</figcaption>
+        <canvas id="chart-hz"></canvas>
+      </figure>
+      <figure>
+        <figcaption>Power (mW)</figcaption>
+        <canvas id="chart-power"></canvas>
+      </figure>
+    </section>
+
+    <details>
+      <summary>See the lists as a table</summary>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>timeVals</th><th>ampVals</th><th>voltVals</th><th>hertzVals</th><th>powerVals</th></tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </details>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="chart.js"></script>
+  <script src="script.js"></script>
+  <script src="page.js"></script>
+</body>
+</html>

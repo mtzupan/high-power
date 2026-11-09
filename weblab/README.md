@@ -8,17 +8,29 @@ no build step and no outside libraries, because Web Lab limits imports.
 
 ```
 weblab/
-├── csv_to_datajs.py   # turns readings CSVs into project/data.js (run on your Mac)
+├── csv_to_datajs.py   # turns readings CSVs into a project's data.js (run on your Mac)
 ├── solution/
-│   └── script.js      # teacher answer key: every step uncommented
-└── project/           # these six files are what goes into Web Lab
-    ├── index.html     # page layout (students don't edit)
-    ├── style.css      # styling (students don't edit)
-    ├── data.js        # generated readings (don't edit by hand)
-    ├── chart.js       # canvas line-chart helper (students don't edit)
-    ├── script.js      # THE STUDENT FILE: uncomment lines step by step
-    └── page.js        # shows step status, charts and table (students don't edit)
+│   └── script.js      # teacher answer key for day1-class: every step uncommented
+├── day1-class/        # whole class, first day of the lesson
+├── blade/             # blade specialist group
+├── generator/         # generator specialist group
+└── gears/             # gears specialist group
 ```
+
+Each of the four project folders holds the same six files, and that folder's six files are
+what goes into one Web Lab project:
+
+```
+<project>/
+├── index.html     # page layout (students don't edit)
+├── style.css      # styling (students don't edit)
+├── data.js        # generated readings (don't edit by hand)
+├── chart.js       # canvas line-chart helper (students don't edit)
+├── script.js      # THE STUDENT FILE: uncomment lines step by step
+└── page.js        # shows step status, charts and table (students don't edit)
+```
+
+The group folders start as copies of `day1-class` and are meant to diverge.
 
 Students only work in `script.js`. It follows the notebook: build parallel lists with a
 `for` loop, calculate power, find spin-up time with a `while` loop, and average the
@@ -33,13 +45,19 @@ upload or `fetch()` CSV files. After a new collection:
 python3 weblab/csv_to_datajs.py notebooks/datasets/IMG_8355_readings.csv
 ```
 
+That writes `day1-class/data.js`. Use `-o` to fill a group's project instead:
+
+```bash
+python3 weblab/csv_to_datajs.py notebooks/datasets/IMG_8355_readings.csv -o weblab/blade/data.js
+```
+
 You can pass several CSVs, for example to compare taper and rectangle blades. The first one becomes
 `readings`, and every one is available as `datasets["<file name>"]`. Blank CSV cells
 become `null`.
 
 ## Trying it locally
 
-Open `project/index.html` in a browser. If it works there with no network, it should work in
+Open any project's `index.html` (for example `day1-class/index.html`) in a browser. If it works there with no network, it should work in
 Web Lab.
 
 ## Before class: check these in Web Lab

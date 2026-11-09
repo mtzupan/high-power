@@ -1,0 +1,237 @@
+/* Matrix theme: phosphor green on black, matching the High Power frontend */
+:root {
+  --bg: #000000;
+  --surface: #020a04;
+  --ink: #00ff41;
+  --ink-muted: #00b32d;
+  --border: #0a5c1f;
+  --grid: #06240e;
+  --glow: rgba(0, 255, 65, 0.25);
+  --done: #00ff41;
+  --done-bg: #03190a;
+  --error-bg: #1a0000;
+  --error-ink: #ff3b3b;
+  --series-1: #00ff41;
+  --series-2: #b6ffc8;
+  --series-3: #00c853;
+  --mono: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--mono);
+  line-height: 1.5;
+  text-shadow: 0 0 6px var(--glow);
+}
+
+/* Faint CRT scanlines over the whole page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 65, 0.03) 0,
+    rgba(0, 255, 65, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 10;
+}
+
+header,
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+header {
+  padding-top: 24px;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+}
+
+h1::before {
+  content: "> ";
+  color: var(--ink-muted);
+}
+
+/* Blinking terminal cursor */
+h1::after {
+  content: "_";
+  margin-left: 4px;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1::after {
+    animation: none;
+  }
+}
+
+header p {
+  margin: 0 0 20px;
+  color: var(--ink-muted);
+}
+
+code {
+  font-family: var(--mono);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 0.9em;
+  color: var(--series-2);
+}
+
+.error {
+  background: var(--error-bg);
+  color: var(--error-ink);
+  border: 1px solid var(--error-ink);
+  text-shadow: 0 0 6px rgba(255, 59, 59, 0.35);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+}
+
+.step h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.status::before {
+  content: "[";
+}
+
+.status::after {
+  content: "]";
+}
+
+.step.done {
+  border-color: var(--done);
+  background: var(--done-bg);
+  box-shadow: 0 0 12px var(--glow), inset 0 0 12px rgba(0, 255, 65, 0.08);
+}
+
+.step.done .status {
+  color: var(--done);
+}
+
+.result {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.step.done .result {
+  color: var(--ink);
+}
+
+.charts {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+figure {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 12px;
+}
+
+figcaption {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 220px;
+  filter: drop-shadow(0 0 3px rgba(0, 255, 65, 0.45));
+}
+
+details {
+  margin-bottom: 40px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: var(--surface);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  text-align: right;
+}
+
+th {
+  font-weight: 700;
+  color: var(--series-2);
+}
+
+tbody tr:hover {
+  background: var(--done-bg);
+}
